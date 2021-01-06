@@ -10,7 +10,7 @@ function initShoppingList() {
     });
 }
 
-function handleItemForm(event) {
+function handleItemForm(event,formRef) {
     if (event.preventDefault) {
         event.preventDefault();
     }
@@ -19,43 +19,47 @@ function handleItemForm(event) {
 
     return false;
 
-}
-function addItemToShoppingList(){
-    let itemName= document.getElementById("item-name");
-    let itemAmount= document.getElementById("item-amount");
-    let id= getRandomInt(0,100000);
 
-    let itemHtml= createListItemHtml(itemName.value, itemAmount.value, id);
+
+}
+function addItemToShoppingList() {
+    let itemName = document.getElementById("item-name");
+    let itemAmount = document.getElementById("item-amount");
+    let id = getRandomInt(0, 100000000);
+
+    let itemHtml = createListItemHtml(itemName.value, itemAmount.value, id);
     console.log("Item HTML", itemHtml);
-    let itemListRef= document.getElementById("shopping-list");
-    itemListRef.insertAdjacentHTML("afterend",itemHtml);
+    let itemListRef = document.getElementById("shopping-list");
+    itemListRef.insertAdjacentHTML("afterend", itemHtml);
 
     setDeleteButtonEvent(id);
 }
 
 function setDeleteButtonEvent(id) {
-    let deleteButton= document.getElementById("button"+id);
-    deleteButton.addEventListener("click", () => {
+    let deleteButton = document.getElementById("button"+id);
+    deleteButton.addEventListener("click",() => {
         removeListItem(id);
     });
-
-
 }
+
 function createListItemHtml(itemName, itemAmount, id) {
     return `<li id="item${id}">
                ${itemName} - ${itemAmount}
-               <button type="button">Delete Item</button>
+               <button id="button${id}" type="button">Delete Item</button>
             </li> `;
 }
-
 function removeListItem(id) {
     let listItem= document.getElementById("item"+id);
     listItem.parentNode.removeChild(listItem);
 }
 
-function getRandomInt(min,max) {
-    min=Math.ceil(min);
-    max=Math.floor(max);
-    return Math.floor(Math.random() * (max-min)) + min;
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
+
+
+
+
 
